@@ -2,16 +2,21 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 
+typedef void FlutterEditableChartsCreatedCallback(
+    FlutterEditableChartsController controller);
+
 class FlutterEditableCharts extends StatefulWidget {
+
+  final FlutterEditableChartsCreatedCallback onCreatedCallback;
+
+  const FlutterEditableCharts({Key key, this.onCreatedCallback})
+      : super(key: key);
+
   @override
-  State<StatefulWidget> createState() {
-    return FlutterEditableChartsState();
-  }
+  State<StatefulWidget> createState() => FlutterEditableChartsState();
 }
 
 class FlutterEditableChartsState extends State<FlutterEditableCharts> {
-  MethodChannel _channel;
-
   @override
   Widget build(BuildContext context) {
     if (defaultTargetPlatform == TargetPlatform.android) {
@@ -24,6 +29,21 @@ class FlutterEditableChartsState extends State<FlutterEditableCharts> {
   }
 
   void _onPlatformViewCreated(int id) {
-    _channel = new MethodChannel('com.timeyaa.com/flutter_editable_charts_$id');
+    if (widget.onCreatedCallback == null) {
+      return;
+    }
+
+    widget.onCreatedCallback(FlutterEditableChartsController._(id));
+  }
+}
+
+class FlutterEditableChartsController {
+  MethodChannel _channel;
+
+  FlutterEditableChartsController._(int id) :
+        _channel = MethodChannel('com.timeyaa.com/flutter_editable_charts_$id');
+
+  Future<String> getData() async {
+    return _channel.invokeMethod("getData");
   }
 }

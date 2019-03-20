@@ -11,6 +11,8 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
 
+  FlutterEditableChartsController _controller;
+
   @override
   void initState() {
     super.initState();
@@ -24,10 +26,23 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: Container(
-            color: Colors.white,
-            padding: const EdgeInsets.all(8.0),
-            child: FlutterEditableCharts(),
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                  color: Colors.white,
+                  padding: const EdgeInsets.all(8.0),
+                  child: FlutterEditableCharts(
+                    onCreatedCallback: (controller) => _controller = controller,
+                  ),
+                ),
+              ),
+              FlatButton(
+                  onPressed: () async {
+                    print(await _controller.getData());
+                  },
+                  child: Text("getData"))
+            ],
           ),
         ),
       ),
