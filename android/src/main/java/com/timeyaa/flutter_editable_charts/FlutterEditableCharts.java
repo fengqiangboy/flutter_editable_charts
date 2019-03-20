@@ -4,9 +4,17 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.alibaba.fastjson.JSON;
+import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.utils.Utils;
 
+import org.json.JSONArray;
+import org.json.JSONStringer;
+
+import java.util.List;
+
 import io.flutter.plugin.common.BinaryMessenger;
+import io.flutter.plugin.common.JSONUtil;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.platform.PlatformView;
@@ -15,7 +23,7 @@ public class FlutterEditableCharts implements PlatformView, MethodChannel.Method
 
     private final MethodChannel methodChannel;
 
-    private final View view;
+    private final LineSetView view;
 
     public FlutterEditableCharts(Context context, BinaryMessenger messenger, int id) {
         Utils.init(context);
@@ -27,7 +35,21 @@ public class FlutterEditableCharts implements PlatformView, MethodChannel.Method
 
     @Override
     public void onMethodCall(MethodCall methodCall, MethodChannel.Result result) {
+        switch (methodCall.method) {
+            case "getData":
+                result.success(JSON.toJSONString(view.getLineData()));
+                break;
 
+            case "setData":
+                String data = methodCall.argument("data");
+                List<LineDataModel> dataModel = JSON.parseArray(data, LineDataModel.class);
+                view.setLineData(dataModel);
+                result.success(null);
+                break;
+
+            default:
+                result.notImplemented();
+        }
     }
 
     @Override
