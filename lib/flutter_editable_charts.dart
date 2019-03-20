@@ -1,13 +1,28 @@
-import 'dart:async';
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/material.dart';
 
-class FlutterEditableCharts {
-  static const MethodChannel _channel =
-      const MethodChannel('flutter_editable_charts');
+class FlutterEditableCharts extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return FlutterEditableChartsState();
+  }
+}
 
-  static Future<String> get platformVersion async {
-    final String version = await _channel.invokeMethod('getPlatformVersion');
-    return version;
+class FlutterEditableChartsState extends State<FlutterEditableCharts> {
+  MethodChannel _channel;
+
+  @override
+  Widget build(BuildContext context) {
+    if (defaultTargetPlatform == TargetPlatform.android) {
+      return AndroidView(
+          viewType: "", onPlatformViewCreated: _onPlatformViewCreated);
+    }
+
+    return Text("iOS version is comming");
+  }
+
+  void _onPlatformViewCreated(int id) {
+    _channel = new MethodChannel('com.timeyaa.com/flutter_editable_charts_$id');
   }
 }
