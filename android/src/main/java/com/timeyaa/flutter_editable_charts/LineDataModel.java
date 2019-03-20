@@ -8,26 +8,34 @@ public class LineDataModel {
     /**
      * x 坐标
      */
-    private double x;
+    private float x;
 
     /**
      * y 坐标
      */
-    private double y;
+    private float y;
 
-    public double getX() {
+    public LineDataModel() {
+    }
+
+    public LineDataModel(float x, float y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public float getX() {
         return x;
     }
 
-    public void setX(double x) {
+    public void setX(float x) {
         this.x = x;
     }
 
-    public double getY() {
+    public float getY() {
         return y;
     }
 
-    public void setY(double y) {
+    public void setY(float y) {
         this.y = y;
     }
 }
