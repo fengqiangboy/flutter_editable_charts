@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.github.mikephil.charting.utils.Utils;
+
 import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
@@ -16,6 +18,8 @@ public class FlutterEditableCharts implements PlatformView, MethodChannel.Method
     private final View view;
 
     public FlutterEditableCharts(Context context, BinaryMessenger messenger, int id) {
+        Utils.init(context);
+
         this.view = new LineSetView(context);
         methodChannel = new MethodChannel(messenger, "com.timeyaa.com/flutter_editable_charts_" + id);
         methodChannel.setMethodCallHandler(this);
