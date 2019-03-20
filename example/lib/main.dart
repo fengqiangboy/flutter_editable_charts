@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_editable_charts/flutter_editable_charts.dart';
 
 void main() => runApp(MyApp());
 
@@ -23,7 +24,11 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+          child: Container(
+            color: Colors.white,
+            padding: const EdgeInsets.all(8.0),
+            child: FlutterEditableCharts(),
+          ),
         ),
       ),
     );
