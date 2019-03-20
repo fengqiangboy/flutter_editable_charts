@@ -1,20 +1,14 @@
 package com.timeyaa.flutter_editable_charts;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 
 import com.alibaba.fastjson.JSON;
-import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.utils.Utils;
-
-import org.json.JSONArray;
-import org.json.JSONStringer;
 
 import java.util.List;
 
 import io.flutter.plugin.common.BinaryMessenger;
-import io.flutter.plugin.common.JSONUtil;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.platform.PlatformView;
