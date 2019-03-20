@@ -16,7 +16,8 @@ class FlutterEditableChartsState extends State<FlutterEditableCharts> {
   Widget build(BuildContext context) {
     if (defaultTargetPlatform == TargetPlatform.android) {
       return AndroidView(
-          viewType: "", onPlatformViewCreated: _onPlatformViewCreated);
+          viewType: "com.timeyaa.com/flutter_editable_charts",
+          onPlatformViewCreated: _onPlatformViewCreated);
     }
 
     return Text("iOS version is comming");
