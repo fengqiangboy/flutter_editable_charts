@@ -1,6 +1,7 @@
 package com.timeyaa.flutter_editable_charts;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 
 import io.flutter.plugin.common.BinaryMessenger;
@@ -12,10 +13,10 @@ public class FlutterEditableCharts implements PlatformView, MethodChannel.Method
 
     private final MethodChannel methodChannel;
 
-    private final Context context;
+    private final View view;
 
     public FlutterEditableCharts(Context context, BinaryMessenger messenger, int id) {
-        this.context = context;
+        this.view = LayoutInflater.from(context).inflate(R.layout.layout_editable_charts, null);
         methodChannel = new MethodChannel(messenger, "com.timeyaa.com/flutter_editable_charts_" + id);
         methodChannel.setMethodCallHandler(this);
     }
@@ -27,7 +28,7 @@ public class FlutterEditableCharts implements PlatformView, MethodChannel.Method
 
     @Override
     public View getView() {
-        return null;
+        return view;
     }
 
     @Override
