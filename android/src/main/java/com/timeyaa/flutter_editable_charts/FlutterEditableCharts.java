@@ -16,7 +16,7 @@ public class FlutterEditableCharts implements PlatformView, MethodChannel.Method
     private final View view;
 
     public FlutterEditableCharts(Context context, BinaryMessenger messenger, int id) {
-        this.view = LayoutInflater.from(context).inflate(R.layout.layout_editable_charts, null);
+        this.view = new LineSetView(context);
         methodChannel = new MethodChannel(messenger, "com.timeyaa.com/flutter_editable_charts_" + id);
         methodChannel.setMethodCallHandler(this);
     }
