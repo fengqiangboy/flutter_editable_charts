@@ -3,6 +3,8 @@ package com.timeyaa.flutter_editable_charts;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -12,6 +14,8 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.listener.ChartTouchListener;
+import com.github.mikephil.charting.utils.MPPointD;
 
 import java.util.ArrayList;
 
@@ -20,6 +24,8 @@ public class LineSetView extends LinearLayout {
     private LineChart lineChart;
 
     private LineDataSet dataSet = initDataSet();
+
+    private ValueChangeListener valueChangeListener;
 
     public LineSetView(Context context) {
         this(context, null);
@@ -36,6 +42,10 @@ public class LineSetView extends LinearLayout {
         lineChart = findViewById(R.id.line_chart);
 
         initLineChart();
+    }
+
+    public void setValueChangeListener(ValueChangeListener valueChangeListener) {
+        this.valueChangeListener = valueChangeListener;
     }
 
     private void initLineChart() {
@@ -62,12 +72,48 @@ public class LineSetView extends LinearLayout {
 
         ArrayList<ILineDataSet> list = new ArrayList<>();
         list.add(dataSet);
-        LineData lineData = new LineData(list);
 
+        LineData lineData = new LineData(list);
         lineData.setValueTextColor(Color.WHITE);
         lineData.setValueTextSize(9);
 
         lineChart.setData(lineData);
+
+        // 手势处理
+        lineChart.setOnTouchListener(new ChartTouchListener<LineChart>(lineChart) {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event == null || v == null) {
+                    return false;
+                }
+
+                LineChart view = (LineChart) v;
+                MPPointD nValue = view.getValuesByTouchPoint(event.getX(), event.getY(), YAxis.AxisDependency.LEFT);
+
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        if (valueChangeListener != null) {
+                            valueChangeListener.onStart();
+                        }
+                        view.performClick();
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        if (valueChangeListener != null) {
+                            valueChangeListener.onChanging();
+                        }
+                        break;
+                    case MotionEvent.ACTION_CANCEL:
+                        if (valueChangeListener != null) {
+                            valueChangeListener.onFinish();
+                        }
+                        break;
+                }
+
+                valueChange(nValue);
+
+                return true;
+            }
+        });
     }
 
     private LineDataSet initDataSet() {
@@ -95,4 +141,32 @@ public class LineSetView extends LinearLayout {
 
         return dataSet;
     }
+
+    private void valueChange(MPPointD nValue) {
+        // 获取数据源
+        ILineDataSet data = lineChart.getData().getDataSetByIndex(0);
+
+        // 遍历数据，获取最接近的那个
+        for (int i = 0; i < data.getEntryCount(); i++) {
+            Entry entry = data.getEntryForIndex(i);
+
+            if (Math.abs(entry.getX() - nValue.x) < 0.2) {
+                entry.setY((float) nValue.y);
+            }
+        }
+
+        dataSet.notifyDataSetChanged();
+        lineChart.notifyDataSetChanged();
+        lineChart.invalidate();
+    }
+
+    public interface ValueChangeListener {
+        void onStart();
+
+        void onChanging();
+
+        void onFinish();
+    }
 }
+
+
