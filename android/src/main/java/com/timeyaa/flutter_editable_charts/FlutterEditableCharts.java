@@ -36,10 +36,7 @@ public class FlutterEditableCharts implements PlatformView, MethodChannel.Method
                 break;
 
             case "setData":
-                String data = methodCall.argument("data");
-                List<LineDataModel> dataModel = JSON.parseArray(data, LineDataModel.class);
-                view.setLineData(dataModel);
-                result.success(null);
+                setData(methodCall, result);
                 break;
 
             default:
@@ -52,6 +49,11 @@ public class FlutterEditableCharts implements PlatformView, MethodChannel.Method
         return view;
     }
 
+    /**
+     * flutter 读取数据
+     *
+     * @param result 结果回调
+     */
     private void getData(MethodChannel.Result result) {
         List<LineDataModel> lineData = view.getLineData();
         List<String> jsonLineData = new ArrayList<>(lineData.size());
@@ -60,6 +62,26 @@ public class FlutterEditableCharts implements PlatformView, MethodChannel.Method
         }
 
         result.success(jsonLineData);
+    }
+
+    /**
+     * 给表设置数据
+     *
+     * @param methodCall 方法调用信息
+     * @param result     结果回调
+     */
+    private void setData(MethodCall methodCall, MethodChannel.Result result) {
+        List<String> argement = methodCall.argument("data");
+        List<LineDataModel> dataModels = new ArrayList<>(argement.size());
+        if (argement.size() != 0) {
+            for (String argStr : argement) {
+                dataModels.add(JSON.parseObject(argStr, LineDataModel.class));
+            }
+        }
+
+        view.setLineData(dataModels);
+
+        result.success(null);
     }
 
     @Override
