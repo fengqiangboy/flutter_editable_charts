@@ -37,6 +37,11 @@ public class LineSetView extends LinearLayout {
      */
     private ValueChangeListener valueChangeListener;
 
+    /**
+     * 最大值
+     */
+    private float maxY = 50;
+
     public LineSetView(Context context) {
         this(context, null);
     }
@@ -78,16 +83,19 @@ public class LineSetView extends LinearLayout {
 
         YAxis axisLeft = lineChart.getAxisLeft();
         axisLeft.setAxisMinimum(0f);
-        axisLeft.setAxisMaximum(50);
+        axisLeft.setAxisMaximum(maxY);
 
         dataSet.setDrawValues(true);
         dataSet.setValueTextColor(Color.WHITE);
 
         dataSet.notifyDataSetChanged();
+        lineChart.notifyDataSetChanged();
         lineChart.invalidate();
     }
 
     public void setLineBoundaryData(double minX, double maxX, int xLabelCount, double xSpaceMin, double minY, double maxY) {
+        this.maxY = (float) maxY;
+
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setAxisMinimum((float) minX);
         xAxis.setAxisMaximum((float) maxX);
@@ -99,6 +107,7 @@ public class LineSetView extends LinearLayout {
         axisLeft.setAxisMaximum((float) maxY);
 
         dataSet.notifyDataSetChanged();
+        lineChart.notifyDataSetChanged();
         lineChart.invalidate();
     }
 
@@ -238,8 +247,15 @@ public class LineSetView extends LinearLayout {
         for (int i = 0; i < data.getEntryCount(); i++) {
             Entry entry = data.getEntryForIndex(i);
 
+            float yValue = (float) nValue.y;
+            if (yValue < 0) {
+                yValue = 0;
+            } else if (yValue > maxY) {
+                yValue = maxY;
+            }
+
             if (Math.abs(entry.getX() - nValue.x) < 0.2) {
-                entry.setY((float) nValue.y);
+                entry.setY(yValue);
             }
         }
 
