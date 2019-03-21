@@ -60,6 +60,31 @@ public class LineSetView extends LinearLayout {
     }
 
     /**
+     * 设置曲线样式
+     *
+     * @param gridBackgroundColor 背景颜色
+     * @param xAxisTextColor      x坐标颜色
+     * @param axisLeftTextColor   左轴颜色
+     * @param valueTextColor      值颜色
+     * @param valueCircleColor    值圆圈颜色
+     * @param valueColor          线颜色
+     */
+    public void setLineStyle(int gridBackgroundColor, int xAxisTextColor, int axisLeftTextColor,
+                             int valueTextColor, int valueCircleColor, int valueColor) {
+        lineChart.setGridBackgroundColor(gridBackgroundColor);
+        lineChart.getXAxis().setTextColor(xAxisTextColor);
+        lineChart.getAxisLeft().setTextColor(axisLeftTextColor);
+        lineChart.getData().setValueTextColor(valueTextColor);
+
+        dataSet.setCircleColor(valueCircleColor);
+        dataSet.setColor(valueColor);
+
+        dataSet.notifyDataSetChanged();
+        lineChart.notifyDataSetChanged();
+        lineChart.invalidate();
+    }
+
+    /**
      * 设置值改变的回调
      *
      * @param valueChangeListener 监听器
@@ -231,7 +256,6 @@ public class LineSetView extends LinearLayout {
         dataSet.setDrawCircles(false);
         dataSet.setDrawIcons(false);
         dataSet.setCircleColor(Color.GREEN);
-        dataSet.setCircleColor(Color.GREEN);
         dataSet.setValueTextSize(30f);
         dataSet.setValueTextSize(30f);
         dataSet.setDrawFilled(true);
@@ -240,7 +264,7 @@ public class LineSetView extends LinearLayout {
         dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
         dataSet.setColor(Color.GREEN);
 
-        dataSet.setCircleRadius(5);
+        dataSet.setCircleRadius(20);
 
         return dataSet;
     }

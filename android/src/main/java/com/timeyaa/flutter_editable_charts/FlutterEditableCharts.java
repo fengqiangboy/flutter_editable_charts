@@ -44,6 +44,10 @@ public class FlutterEditableCharts implements PlatformView, MethodChannel.Method
                 setLineBoundaryData(methodCall, result);
                 break;
 
+            case "setLineStyle":
+                setLineStyle(methodCall, result);
+                break;
+
             default:
                 result.notImplemented();
         }
@@ -105,6 +109,26 @@ public class FlutterEditableCharts implements PlatformView, MethodChannel.Method
         Double xSpaceMin = methodCall.argument("xSpaceMin");
 
         view.setLineBoundaryData(minX, maxX, xLabelCount, xSpaceMin, minY, maxY);
+        result.success(null);
+    }
+
+    /**
+     * 设置曲线样式
+     *
+     * @param methodCall 调用信息
+     * @param result     结果
+     */
+    private void setLineStyle(MethodCall methodCall, MethodChannel.Result result) {
+        int gridBackgroundColor = methodCall.argument("gridBackgroundColor");
+        int xAxisTextColor = methodCall.argument("xAxisTextColor");
+        int axisLeftTextColor = methodCall.argument("axisLeftTextColor");
+        int valueTextColor = methodCall.argument("valueTextColor");
+        int valueCircleColor = methodCall.argument("valueCircleColor");
+        int valueColor = methodCall.argument("valueColor");
+
+        view.setLineStyle(gridBackgroundColor, xAxisTextColor, axisLeftTextColor, valueTextColor, valueCircleColor, valueColor);
+
+        result.success(null);
     }
 
     @Override
