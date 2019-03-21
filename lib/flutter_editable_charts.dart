@@ -24,16 +24,22 @@ class FlutterEditableCharts extends StatefulWidget {
   /// 拖拽完成
   final Function onFinish;
 
+  /// 初始化的x坐标最小值
   final double initMinX;
 
+  /// 初始化的x坐标最大值
   final double initMaxX;
 
+  /// 初始化的X坐标点数
   final int initXLabelCount;
 
+  /// 初始化的x坐标最小间距
   final double initXSpaceMin;
 
+  /// 初始化Y的最小坐标
   final double initMinY;
 
+  /// 初始化的y都最大坐标
   final double initMaxY;
 
   const FlutterEditableCharts(
