@@ -122,4 +122,18 @@ class FlutterEditableChartsController {
       "data": jsonModels
     });
   }
+
+  Future<void> setLineBoundaryData(double minX, double maxX, int xLabelCount,
+      double xSpaceMin,
+      double minY,
+      double maxY) async {
+    await _channel.invokeMethod("setLineBoundaryData", <String, num>{
+      "minX": minX,
+      "maxX": maxX,
+      "minY": minY,
+      "maxY": maxY,
+      "xLabelCount": xLabelCount,
+      "xSpaceMin": xSpaceMin
+    },);
+  }
 }

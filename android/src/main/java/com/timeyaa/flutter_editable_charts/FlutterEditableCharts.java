@@ -40,6 +40,10 @@ public class FlutterEditableCharts implements PlatformView, MethodChannel.Method
                 setData(methodCall, result);
                 break;
 
+            case "setLineBoundaryData":
+                setLineBoundaryData(methodCall, result);
+                break;
+
             default:
                 result.notImplemented();
         }
@@ -83,6 +87,24 @@ public class FlutterEditableCharts implements PlatformView, MethodChannel.Method
         view.setLineData(dataModels);
 
         result.success(null);
+    }
+
+
+    /**
+     * 设置边界值
+     *
+     * @param methodCall 方法调用信息
+     * @param result     结果回调
+     */
+    private void setLineBoundaryData(MethodCall methodCall, MethodChannel.Result result) {
+        Double minX = methodCall.argument("minX");
+        Double maxX = methodCall.argument("maxX");
+        Double minY = methodCall.argument("minY");
+        Double maxY = methodCall.argument("maxY");
+        Integer xLabelCount = methodCall.argument("xLabelCount");
+        Double xSpaceMin = methodCall.argument("xSpaceMin");
+
+        view.setLineBoundaryData(minX, maxX, xLabelCount, xSpaceMin, minY, maxY);
     }
 
     @Override

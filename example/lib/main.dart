@@ -55,7 +55,7 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  void _setData() {
+  void _setData() async {
     List<LineDataModel> models = [
       LineDataModel(x: 0, y: 13),
       LineDataModel(x: 1, y: 45),
@@ -66,6 +66,7 @@ class _MyAppState extends State<MyApp> {
       LineDataModel(x: 6, y: 13),
     ];
 
-    _controller.setData(models);
+    await _controller.setLineBoundaryData(0, 6, 6, 1, 0, 30);
+    await _controller.setData(models);
   }
 }

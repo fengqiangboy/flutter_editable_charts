@@ -80,11 +80,26 @@ public class LineSetView extends LinearLayout {
         axisLeft.setAxisMinimum(0f);
         axisLeft.setAxisMaximum(50);
 
-        dataSet.notifyDataSetChanged();
-        lineChart.invalidate();
-
         dataSet.setDrawValues(true);
         dataSet.setValueTextColor(Color.WHITE);
+
+        dataSet.notifyDataSetChanged();
+        lineChart.invalidate();
+    }
+
+    public void setLineBoundaryData(double minX, double maxX, int xLabelCount, double xSpaceMin, double minY, double maxY) {
+        XAxis xAxis = lineChart.getXAxis();
+        xAxis.setAxisMinimum((float) minX);
+        xAxis.setAxisMaximum((float) maxX);
+        xAxis.setSpaceMin((float) xSpaceMin);
+        xAxis.setLabelCount(xLabelCount, true);
+
+        YAxis axisLeft = lineChart.getAxisLeft();
+        axisLeft.setAxisMinimum((float) minY);
+        axisLeft.setAxisMaximum((float) maxY);
+
+        dataSet.notifyDataSetChanged();
+        lineChart.invalidate();
     }
 
     /**
