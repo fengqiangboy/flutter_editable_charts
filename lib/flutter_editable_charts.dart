@@ -120,7 +120,7 @@ class FlutterEditableChartsState extends State<FlutterEditableCharts> {
 
     /// 设置初始化的坐标参数
     await controller.setLineBoundaryData(
-        widget.initMaxX,
+        widget.initMinX,
         widget.initMaxX,
         widget.initXLabelCount,
         widget.initXSpaceMin,
