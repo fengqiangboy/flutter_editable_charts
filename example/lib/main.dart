@@ -41,10 +41,28 @@ class _MyAppState extends State<MyApp> {
                 },
                 child: Text("getData"),
               ),
+              FlatButton(
+                onPressed: _setData,
+                child: Text("setData"),
+              ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  void _setData() {
+    List<LineDataModel> models = [
+      LineDataModel(x: 0, y: 13),
+      LineDataModel(x: 1, y: 45),
+      LineDataModel(x: 2, y: 26),
+      LineDataModel(x: 3, y: 33),
+      LineDataModel(x: 4, y: 24),
+      LineDataModel(x: 5, y: 9),
+      LineDataModel(x: 6, y: 13),
+    ];
+
+    _controller.setData(models);
   }
 }

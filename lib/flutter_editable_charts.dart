@@ -5,6 +5,8 @@ import 'dart:convert';
 
 import 'package:flutter_editable_charts/line_data_model.dart';
 
+export 'package:flutter_editable_charts/line_data_model.dart';
+
 typedef void FlutterEditableChartsCreatedCallback(
     FlutterEditableChartsController controller);
 
