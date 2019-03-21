@@ -51,13 +51,22 @@ class FlutterEditableChartsController {
       return null;
     }
 
-    var models = List<LineDataModel>();
+    var datas = List<LineDataModel>();
 
     result.forEach((jsonStr) {
       var model = LineDataModel.fromJson(json.decode(jsonStr));
-      models.add(model);
+      datas.add(model);
     });
 
-    return models;
+    return datas;
+  }
+
+  Future<void> setData(List<LineDataModel> datas) async {
+    List jsonModels = datas.map((model) => json.encode(model.toJson()))
+        .toList();
+
+    await _channel.invokeMethod("setData", <String, List>{
+      "data": jsonModels
+    });
   }
 }

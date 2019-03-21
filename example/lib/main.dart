@@ -36,10 +36,11 @@ class _MyAppState extends State<MyApp> {
                 ),
               ),
               FlatButton(
-                  onPressed: () async {
-                    print(await _controller.getData());
-                  },
-                  child: Text("getData"))
+                onPressed: () async {
+                  print(await _controller.getData());
+                },
+                child: Text("getData"),
+              ),
             ],
           ),
         ),
