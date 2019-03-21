@@ -4,11 +4,11 @@ part 'line_data_model.g.dart';
 
 @JsonSerializable()
 class LineDataModel {
-  double x;
+  final double x;
 
-  double y;
+  final double y;
 
-  LineDataModel({this.x, this.y});
+  const LineDataModel({this.x = 0, this.y = 0});
 
   @override
   String toString() {

@@ -63,6 +63,9 @@ class FlutterEditableCharts extends StatefulWidget {
   /// 初始化的背景颜色
   final Color initBackgroundColor;
 
+  /// 初始化使用的数据
+  final List<LineDataModel> initData;
+
   const FlutterEditableCharts({
     Key key,
     this.onCreatedCallback,
@@ -75,6 +78,7 @@ class FlutterEditableCharts extends StatefulWidget {
     this.initXSpaceMin = 1,
     this.initMinY = 0,
     this.initMaxY = 50,
+    this.initData,
     this.initGridBackgroundColor = Colors.black,
     this.initXAxisTextColor = Colors.black,
     this.initAxisLeftTextColor = Colors.black,
@@ -126,6 +130,10 @@ class FlutterEditableChartsState extends State<FlutterEditableCharts> {
         widget.initXSpaceMin,
         widget.initMinY,
         widget.initMaxY);
+
+    /// 设置初始化数据
+    var data = widget.initData ?? [LineDataModel(x: 0, y: 0)];
+    await controller.setData(data);
 
     if (widget.onCreatedCallback == null) {
       return;
