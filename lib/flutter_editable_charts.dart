@@ -127,7 +127,6 @@ class FlutterEditableChartsController {
   }
 
   /// 设置曲线边界值
-  /// 应该在setData 之后才调用，否则会让 setData 失效
   /// [minX] x最小值
   /// [maxX] x最大值
   /// [xLabelCount] x坐标点数

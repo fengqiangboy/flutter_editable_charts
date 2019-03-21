@@ -66,7 +66,7 @@ class _MyAppState extends State<MyApp> {
       LineDataModel(x: 6, y: 13),
     ];
 
-    await _controller.setData(models);
     await _controller.setLineBoundaryData(0, 6, 6, 1, 0, 30);
+    await _controller.setData(models);
   }
 }
