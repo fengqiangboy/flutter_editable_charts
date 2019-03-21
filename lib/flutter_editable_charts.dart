@@ -42,19 +42,47 @@ class FlutterEditableCharts extends StatefulWidget {
   /// 初始化的y都最大坐标
   final double initMaxY;
 
-  const FlutterEditableCharts(
-      {Key key,
-      this.onCreatedCallback,
-      this.onStart,
-      this.onChanging,
-      this.onFinish,
-      this.initMinX = 0,
-      this.initMaxX = 10,
-      this.initXLabelCount = 10,
-      this.initXSpaceMin = 1,
-      this.initMinY = 0,
-      this.initMaxY = 50})
-      : super(key: key);
+  /// 初始化的网格背景
+  final Color initGridBackgroundColor;
+
+  ///初始化的坐标轴文字颜色
+  final Color initXAxisTextColor;
+
+  /// 初始化的左坐标轴文字颜色
+  final Color initAxisLeftTextColor;
+
+  /// 初始化的值文字颜色
+  final Color initValueTextColor;
+
+  /// 初始化的值圆圈颜色
+  final Color initValueCircleColor;
+
+  /// 初始化的线条颜色
+  final Color initValueColor;
+
+  /// 初始化的背景颜色
+  final Color initBackgroundColor;
+
+  const FlutterEditableCharts({
+    Key key,
+    this.onCreatedCallback,
+    this.onStart,
+    this.onChanging,
+    this.onFinish,
+    this.initMinX = 0,
+    this.initMaxX = 10,
+    this.initXLabelCount = 10,
+    this.initXSpaceMin = 1,
+    this.initMinY = 0,
+    this.initMaxY = 50,
+    this.initGridBackgroundColor = Colors.black,
+    this.initXAxisTextColor = Colors.black,
+    this.initAxisLeftTextColor = Colors.black,
+    this.initValueTextColor = Colors.white,
+    this.initValueCircleColor = Colors.white,
+    this.initValueColor = Colors.white,
+    this.initBackgroundColor = Colors.blueGrey,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => FlutterEditableChartsState();
@@ -72,7 +100,7 @@ class FlutterEditableChartsState extends State<FlutterEditableCharts> {
     return Text("iOS version is comming");
   }
 
-  void _onPlatformViewCreated(int id) {
+  void _onPlatformViewCreated(int id) async {
     var controller = FlutterEditableChartsController._(
       id,
       onStart: widget.onStart,
@@ -80,7 +108,18 @@ class FlutterEditableChartsState extends State<FlutterEditableCharts> {
       onFinish: widget.onFinish,
     );
 
-    controller.setLineBoundaryData(
+    /// 初始化颜色
+    await controller.setLineStyle(
+        gridBackgroundColor: widget.initGridBackgroundColor,
+        xAxisTextColor: widget.initXAxisTextColor,
+        axisLeftTextColor: widget.initAxisLeftTextColor,
+        valueTextColor: widget.initValueTextColor,
+        valueCircleColor: widget.initValueCircleColor,
+        valueColor: widget.initValueColor,
+        backgroundColor: widget.initBackgroundColor);
+
+    /// 设置初始化的坐标参数
+    await controller.setLineBoundaryData(
         widget.initMaxX,
         widget.initMaxX,
         widget.initXLabelCount,
