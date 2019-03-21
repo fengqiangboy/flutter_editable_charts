@@ -157,12 +157,17 @@ public class LineSetView extends LinearLayout {
                         break;
                     case MotionEvent.ACTION_UP:
                         if (valueChangeListener != null) {
-                            valueChangeListener.onChanging();
+                            valueChangeListener.onFinish();
                         }
                         break;
                     case MotionEvent.ACTION_CANCEL:
                         if (valueChangeListener != null) {
                             valueChangeListener.onFinish();
+                        }
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        if (valueChangeListener != null) {
+                            valueChangeListener.onChanging();
                         }
                         break;
                 }
