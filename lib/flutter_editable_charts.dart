@@ -24,8 +24,30 @@ class FlutterEditableCharts extends StatefulWidget {
   /// 拖拽完成
   final Function onFinish;
 
+  final double initMinX;
+
+  final double initMaxX;
+
+  final int initXLabelCount;
+
+  final double initXSpaceMin;
+
+  final double initMinY;
+
+  final double initMaxY;
+
   const FlutterEditableCharts(
-      {Key key, this.onCreatedCallback, this.onStart, this.onChanging, this.onFinish,})
+      {Key key,
+      this.onCreatedCallback,
+      this.onStart,
+      this.onChanging,
+      this.onFinish,
+      this.initMinX = 0,
+      this.initMaxX = 10,
+      this.initXLabelCount = 10,
+      this.initXSpaceMin = 1,
+      this.initMinY = 0,
+      this.initMaxY = 50})
       : super(key: key);
 
   @override
@@ -45,14 +67,26 @@ class FlutterEditableChartsState extends State<FlutterEditableCharts> {
   }
 
   void _onPlatformViewCreated(int id) {
+    var controller = FlutterEditableChartsController._(
+      id,
+      onStart: widget.onStart,
+      onChanging: widget.onChanging,
+      onFinish: widget.onFinish,
+    );
+
+    controller.setLineBoundaryData(
+        widget.initMaxX,
+        widget.initMaxX,
+        widget.initXLabelCount,
+        widget.initXSpaceMin,
+        widget.initMinY,
+        widget.initMaxY);
+
     if (widget.onCreatedCallback == null) {
       return;
     }
 
-    widget.onCreatedCallback(FlutterEditableChartsController._(
-      id, onStart: widget.onStart,
-      onChanging: widget.onChanging,
-      onFinish: widget.onFinish,),);
+    widget.onCreatedCallback(controller);
   }
 }
 
@@ -69,8 +103,7 @@ class FlutterEditableChartsController {
   Function _onFinish;
 
   FlutterEditableChartsController._(int id,
-      {Function onStart, Function onChanging, Function onFinish})
-  {
+      {Function onStart, Function onChanging, Function onFinish}) {
     _channel = MethodChannel('com.timeyaa.com/flutter_editable_charts_$id');
     _channel.setMethodCallHandler(methodHandler);
     _onStart = onStart;
@@ -96,6 +129,8 @@ class FlutterEditableChartsController {
         }
         break;
     }
+
+    return null;
   }
 
   /// 获取曲线上面当前的数据
@@ -118,12 +153,10 @@ class FlutterEditableChartsController {
   /// 给曲线设置数据
   /// [datas] 要设置的数据点
   Future<void> setData(List<LineDataModel> datas) async {
-    List jsonModels = datas.map((model) => json.encode(model.toJson()))
-        .toList();
+    List jsonModels =
+        datas.map((model) => json.encode(model.toJson())).toList();
 
-    await _channel.invokeMethod("setData", <String, List>{
-      "data": jsonModels
-    });
+    await _channel.invokeMethod("setData", <String, List>{"data": jsonModels});
   }
 
   /// 设置曲线边界值
@@ -134,26 +167,28 @@ class FlutterEditableChartsController {
   /// [minY] y最小值
   /// [maxY] y最大值
   Future<void> setLineBoundaryData(double minX, double maxX, int xLabelCount,
-      double xSpaceMin,
-      double minY,
-      double maxY) async {
-    await _channel.invokeMethod("setLineBoundaryData", <String, num>{
-      "minX": minX,
-      "maxX": maxX,
-      "minY": minY,
-      "maxY": maxY,
-      "xLabelCount": xLabelCount,
-      "xSpaceMin": xSpaceMin
-    },);
+      double xSpaceMin, double minY, double maxY) async {
+    await _channel.invokeMethod(
+      "setLineBoundaryData",
+      <String, num>{
+        "minX": minX,
+        "maxX": maxX,
+        "minY": minY,
+        "maxY": maxY,
+        "xLabelCount": xLabelCount,
+        "xSpaceMin": xSpaceMin
+      },
+    );
   }
 
-  Future<void> setLineStyle({@required Color gridBackgroundColor,
-    @required Color xAxisTextColor,
-    @required Color axisLeftTextColor,
-    @required Color valueTextColor,
-    @required Color valueCircleColor,
-    @required Color valueColor,
-    @required Color backgroundColor}) async {
+  Future<void> setLineStyle(
+      {@required Color gridBackgroundColor,
+      @required Color xAxisTextColor,
+      @required Color axisLeftTextColor,
+      @required Color valueTextColor,
+      @required Color valueCircleColor,
+      @required Color valueColor,
+      @required Color backgroundColor}) async {
     await _channel.invokeMethod("setLineStyle", <String, int>{
       "gridBackgroundColor": gridBackgroundColor.value,
       "xAxisTextColor": xAxisTextColor.value,
