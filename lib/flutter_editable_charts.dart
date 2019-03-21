@@ -98,6 +98,7 @@ class FlutterEditableChartsController {
     }
   }
 
+  /// 获取曲线上面当前的数据
   Future<List<LineDataModel>> getData() async {
     var result = await _channel.invokeMethod("getData");
     if (!(result is List)) {
@@ -114,6 +115,8 @@ class FlutterEditableChartsController {
     return datas;
   }
 
+  /// 给曲线设置数据
+  /// [datas] 要设置的数据点
   Future<void> setData(List<LineDataModel> datas) async {
     List jsonModels = datas.map((model) => json.encode(model.toJson()))
         .toList();
@@ -123,6 +126,14 @@ class FlutterEditableChartsController {
     });
   }
 
+  /// 设置曲线边界值
+  /// 应该在setData 之后才调用，否则会让 setData 失效
+  /// [minX] x最小值
+  /// [maxX] x最大值
+  /// [xLabelCount] x坐标点数
+  /// [xSpaceMin] x坐标最小间隔
+  /// [minY] y最小值
+  /// [maxY] y最大值
   Future<void> setLineBoundaryData(double minX, double maxX, int xLabelCount,
       double xSpaceMin,
       double minY,

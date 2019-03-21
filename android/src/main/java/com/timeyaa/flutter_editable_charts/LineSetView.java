@@ -76,15 +76,6 @@ public class LineSetView extends LinearLayout {
             dataSet.getValues().add(nEntry);
         }
 
-        XAxis xAxis = lineChart.getXAxis();
-        xAxis.setAxisMinimum(0f);
-        xAxis.setAxisMaximum(dataModels.get(dataModels.size() - 1).getY());
-        xAxis.setLabelCount(dataModels.size(), true);
-
-        YAxis axisLeft = lineChart.getAxisLeft();
-        axisLeft.setAxisMinimum(0f);
-        axisLeft.setAxisMaximum(maxY);
-
         dataSet.setDrawValues(true);
         dataSet.setValueTextColor(Color.WHITE);
 
@@ -189,11 +180,11 @@ public class LineSetView extends LinearLayout {
                             valueChangeListener.onFinish();
                         }
                         break;
-                    case MotionEvent.ACTION_MOVE:
-                        if (valueChangeListener != null) {
-                            valueChangeListener.onChanging();
-                        }
-                        break;
+//                    case MotionEvent.ACTION_MOVE:
+//                        if (valueChangeListener != null) {
+//                            valueChangeListener.onChanging();
+//                        }
+//                        break;
                 }
 
                 valueChange(nValue);
