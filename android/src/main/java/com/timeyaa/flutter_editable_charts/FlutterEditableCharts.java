@@ -6,6 +6,7 @@ import android.view.View;
 import com.alibaba.fastjson.JSON;
 import com.github.mikephil.charting.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.flutter.plugin.common.BinaryMessenger;
@@ -31,7 +32,7 @@ public class FlutterEditableCharts implements PlatformView, MethodChannel.Method
     public void onMethodCall(MethodCall methodCall, MethodChannel.Result result) {
         switch (methodCall.method) {
             case "getData":
-                result.success(JSON.toJSONString(view.getLineData()));
+                getData(result);
                 break;
 
             case "setData":
@@ -49,6 +50,16 @@ public class FlutterEditableCharts implements PlatformView, MethodChannel.Method
     @Override
     public View getView() {
         return view;
+    }
+
+    private void getData(MethodChannel.Result result) {
+        List<LineDataModel> lineData = view.getLineData();
+        List<String> jsonLineData = new ArrayList<>(lineData.size());
+        for (LineDataModel data : lineData) {
+            jsonLineData.add(JSON.toJSONString(data));
+        }
+
+        result.success(jsonLineData);
     }
 
     @Override
