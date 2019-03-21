@@ -146,4 +146,17 @@ class FlutterEditableChartsController {
       "xSpaceMin": xSpaceMin
     },);
   }
+
+  Future<void> setLineStyle(Color gridBackgroundColor, Color xAxisTextColor,
+      Color axisLeftTextColor, Color valueTextColor, Color valueCircleColor,
+      Color valueColor) async {
+    await _channel.invokeMethod("setLineStyle", <String, int>{
+      "gridBackgroundColor": gridBackgroundColor.value,
+      "xAxisTextColor": xAxisTextColor.value,
+      "axisLeftTextColor": axisLeftTextColor.value,
+      "valueTextColor": valueTextColor.value,
+      "valueCircleColor": valueCircleColor.value,
+      "valueColor": valueColor.value
+    });
+  }
 }

@@ -48,6 +48,10 @@ class _MyAppState extends State<MyApp> {
                 onPressed: _setData,
                 child: Text("setData"),
               ),
+              FlatButton(
+                onPressed: _changeColor,
+                child: Text("changeColor"),
+              ),
             ],
           ),
         ),
@@ -68,5 +72,10 @@ class _MyAppState extends State<MyApp> {
 
     await _controller.setLineBoundaryData(0, 6, 6, 1, 0, 30);
     await _controller.setData(models);
+  }
+
+  void _changeColor() async {
+    await _controller.setLineStyle(Colors.red, Colors.red, Colors.red,
+        Colors.white, Colors.white, Colors.red);
   }
 }
