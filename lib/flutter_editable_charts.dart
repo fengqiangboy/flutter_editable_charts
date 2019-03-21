@@ -7,13 +7,25 @@ import 'package:flutter_editable_charts/line_data_model.dart';
 
 export 'package:flutter_editable_charts/line_data_model.dart';
 
+/// 创建完成回调
 typedef void FlutterEditableChartsCreatedCallback(
     FlutterEditableChartsController controller);
 
 class FlutterEditableCharts extends StatefulWidget {
+  /// 创建完成回调，在这里可以拿到controller
   final FlutterEditableChartsCreatedCallback onCreatedCallback;
 
-  const FlutterEditableCharts({Key key, this.onCreatedCallback})
+  /// 开始拖动图表
+  final Function onStart;
+
+  /// 拖拽中
+  final Function onChanging;
+
+  /// 拖拽完成
+  final Function onFinish;
+
+  const FlutterEditableCharts(
+      {Key key, this.onCreatedCallback, this.onStart, this.onChanging, this.onFinish,})
       : super(key: key);
 
   @override
@@ -37,15 +49,54 @@ class FlutterEditableChartsState extends State<FlutterEditableCharts> {
       return;
     }
 
-    widget.onCreatedCallback(FlutterEditableChartsController._(id));
+    widget.onCreatedCallback(FlutterEditableChartsController._(
+      id, onStart: widget.onStart,
+      onChanging: widget.onChanging,
+      onFinish: widget.onFinish,),);
   }
 }
 
 class FlutterEditableChartsController {
   MethodChannel _channel;
 
-  FlutterEditableChartsController._(int id)
-      : _channel = MethodChannel('com.timeyaa.com/flutter_editable_charts_$id');
+  /// 开始拖动图表
+  Function _onStart;
+
+  /// 拖拽中
+  Function _onChanging;
+
+  /// 拖拽完成
+  Function _onFinish;
+
+  FlutterEditableChartsController._(int id,
+      {Function onStart, Function onChanging, Function onFinish})
+  {
+    _channel = MethodChannel('com.timeyaa.com/flutter_editable_charts_$id');
+    _channel.setMethodCallHandler(methodHandler);
+    _onStart = onStart;
+    _onChanging = onChanging;
+    _onFinish = onFinish;
+  }
+
+  Future<dynamic> methodHandler(MethodCall call) {
+    switch (call.method) {
+      case "onStart":
+        if (_onStart != null) {
+          _onStart();
+        }
+        break;
+      case "onChanging":
+        if (_onChanging != null) {
+          _onChanging();
+        }
+        break;
+      case "onFinish":
+        if (_onFinish != null) {
+          _onFinish();
+        }
+        break;
+    }
+  }
 
   Future<List<LineDataModel>> getData() async {
     var result = await _channel.invokeMethod("getData");

@@ -14,7 +14,7 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.platform.PlatformView;
 
-public class FlutterEditableCharts implements PlatformView, MethodChannel.MethodCallHandler {
+public class FlutterEditableCharts implements PlatformView, MethodChannel.MethodCallHandler, LineSetView.ValueChangeListener {
 
     private final MethodChannel methodChannel;
 
@@ -24,6 +24,7 @@ public class FlutterEditableCharts implements PlatformView, MethodChannel.Method
         Utils.init(context);
 
         this.view = new LineSetView(context);
+        this.view.setValueChangeListener(this);
         methodChannel = new MethodChannel(messenger, "com.timeyaa.com/flutter_editable_charts_" + id);
         methodChannel.setMethodCallHandler(this);
     }
@@ -87,5 +88,20 @@ public class FlutterEditableCharts implements PlatformView, MethodChannel.Method
     @Override
     public void dispose() {
 
+    }
+
+    @Override
+    public void onStart() {
+        methodChannel.invokeMethod("onStart", null);
+    }
+
+    @Override
+    public void onChanging() {
+        methodChannel.invokeMethod("onChanging", null);
+    }
+
+    @Override
+    public void onFinish() {
+        methodChannel.invokeMethod("onFinish", null);
     }
 }

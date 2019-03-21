@@ -32,6 +32,9 @@ class _MyAppState extends State<MyApp> {
                   padding: const EdgeInsets.all(8.0),
                   child: FlutterEditableCharts(
                     onCreatedCallback: (controller) => _controller = controller,
+                    onStart: () => debugPrint("on start"),
+                    onChanging: () => debugPrint("on changing"),
+                    onFinish: () => debugPrint("on finish"),
                   ),
                 ),
               ),
