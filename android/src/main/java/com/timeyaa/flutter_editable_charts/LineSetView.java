@@ -59,10 +59,20 @@ public class LineSetView extends LinearLayout {
         initLineChart();
     }
 
+    /**
+     * 设置值改变的回调
+     *
+     * @param valueChangeListener 监听器
+     */
     public void setValueChangeListener(ValueChangeListener valueChangeListener) {
         this.valueChangeListener = valueChangeListener;
     }
 
+    /**
+     * 设置数据
+     *
+     * @param dataModels 数据点
+     */
     public void setLineData(List<LineDataModel> dataModels) {
         dataSet.getValues().clear();
 
@@ -84,6 +94,16 @@ public class LineSetView extends LinearLayout {
         lineChart.invalidate();
     }
 
+    /**
+     * 设置曲线边界值
+     *
+     * @param minX        x最小值
+     * @param maxX        x最大值
+     * @param xLabelCount x坐标点数
+     * @param xSpaceMin   x最小坐标间隔
+     * @param minY        y最小值
+     * @param maxY        y最大值
+     */
     public void setLineBoundaryData(double minX, double maxX, int xLabelCount, double xSpaceMin, double minY, double maxY) {
         this.maxY = (float) maxY;
 
