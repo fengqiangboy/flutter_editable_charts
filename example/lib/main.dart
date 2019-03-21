@@ -75,7 +75,13 @@ class _MyAppState extends State<MyApp> {
   }
 
   void _changeColor() async {
-    await _controller.setLineStyle(Colors.red, Colors.red, Colors.red,
-        Colors.white, Colors.white, Colors.red);
+    await _controller.setLineStyle(
+        gridBackgroundColor: Colors.red,
+        xAxisTextColor: Colors.red,
+        axisLeftTextColor: Colors.red,
+        valueTextColor: Colors.white,
+        valueCircleColor: Colors.white,
+        valueColor: Colors.red,
+        backgroundColor: Colors.blue);
   }
 }

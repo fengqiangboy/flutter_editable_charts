@@ -125,8 +125,10 @@ public class FlutterEditableCharts implements PlatformView, MethodChannel.Method
         long valueTextColor = methodCall.argument("valueTextColor");
         long valueCircleColor = methodCall.argument("valueCircleColor");
         long valueColor = methodCall.argument("valueColor");
+        long backgroundColor = methodCall.argument("backgroundColor");
 
-        view.setLineStyle(gridBackgroundColor, xAxisTextColor, axisLeftTextColor, valueTextColor, valueCircleColor, valueColor);
+
+        view.setLineStyle(gridBackgroundColor, xAxisTextColor, axisLeftTextColor, valueTextColor, valueCircleColor, valueColor, backgroundColor);
 
         result.success(null);
     }

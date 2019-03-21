@@ -147,16 +147,21 @@ class FlutterEditableChartsController {
     },);
   }
 
-  Future<void> setLineStyle(Color gridBackgroundColor, Color xAxisTextColor,
-      Color axisLeftTextColor, Color valueTextColor, Color valueCircleColor,
-      Color valueColor) async {
+  Future<void> setLineStyle({@required Color gridBackgroundColor,
+    @required Color xAxisTextColor,
+    @required Color axisLeftTextColor,
+    @required Color valueTextColor,
+    @required Color valueCircleColor,
+    @required Color valueColor,
+    @required Color backgroundColor}) async {
     await _channel.invokeMethod("setLineStyle", <String, int>{
       "gridBackgroundColor": gridBackgroundColor.value,
       "xAxisTextColor": xAxisTextColor.value,
       "axisLeftTextColor": axisLeftTextColor.value,
       "valueTextColor": valueTextColor.value,
       "valueCircleColor": valueCircleColor.value,
-      "valueColor": valueColor.value
+      "valueColor": valueColor.value,
+      "backgroundColor": backgroundColor.value
     });
   }
 }
