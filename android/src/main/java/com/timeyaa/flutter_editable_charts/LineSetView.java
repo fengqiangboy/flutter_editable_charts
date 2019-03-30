@@ -40,12 +40,12 @@ public class LineSetView extends LinearLayout {
     /**
      * 最大值
      */
-    private float maxY = 50;
+    private float maxY = 200;
 
     /**
      * 最小值
      */
-    private float minY = 0;
+    private float minY = 100;
 
     public LineSetView(Context context) {
         this(context, null);
@@ -120,6 +120,7 @@ public class LineSetView extends LinearLayout {
         }
 
         dataSet.setDrawValues(true);
+        dataSet.setValueTextColor(Color.BLACK);
 
         dataSet.notifyDataSetChanged();
         lineChart.notifyDataSetChanged();
