@@ -42,6 +42,8 @@ public class LineSetView extends LinearLayout {
      */
     private float maxY = 50;
 
+    private float minY = 0;
+
     public LineSetView(Context context) {
         this(context, null);
     }
@@ -133,6 +135,7 @@ public class LineSetView extends LinearLayout {
      */
     public void setLineBoundaryData(double minX, double maxX, int xLabelCount, double xSpaceMin, double minY, double maxY) {
         this.maxY = (float) maxY;
+        this.minY = (float) minY;
 
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setAxisMinimum((float) minX);
@@ -285,13 +288,14 @@ public class LineSetView extends LinearLayout {
             Entry entry = data.getEntryForIndex(i);
 
             float yValue = (float) nValue.y;
-            if (yValue < 0) {
-                yValue = 0;
+            if (yValue < minY) {
+                yValue = minY;
             } else if (yValue > maxY) {
                 yValue = maxY;
             }
 
             if (Math.abs(entry.getX() - nValue.x) < 0.2) {
+
                 entry.setY(yValue);
             }
         }
