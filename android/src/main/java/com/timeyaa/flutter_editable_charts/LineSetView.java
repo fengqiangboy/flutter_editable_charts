@@ -119,7 +119,6 @@ public class LineSetView extends LinearLayout {
         }
 
         dataSet.setDrawValues(true);
-        dataSet.setValueTextColor(Color.WHITE);
 
         dataSet.notifyDataSetChanged();
         lineChart.notifyDataSetChanged();
@@ -200,7 +199,7 @@ public class LineSetView extends LinearLayout {
         list.add(dataSet);
 
         LineData lineData = new LineData(list);
-        lineData.setValueTextColor(Color.WHITE);
+        lineData.setValueTextColor(Color.BLACK);
         lineData.setValueTextSize(9);
 
         lineChart.setData(lineData);
@@ -264,7 +263,6 @@ public class LineSetView extends LinearLayout {
         dataSet.setDrawCircles(false);
         dataSet.setDrawIcons(false);
         dataSet.setCircleColor(Color.GREEN);
-        dataSet.setValueTextSize(30f);
         dataSet.setValueTextSize(30f);
         dataSet.setDrawFilled(true);
         dataSet.setDrawValues(true);
