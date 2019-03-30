@@ -85,6 +85,7 @@ public class LineSetView extends LinearLayout {
 
         dataSet.setCircleColor((int) valueCircleColor);
         dataSet.setColor((int) valueColor);
+        dataSet.setValueTextColor((int) valueTextColor);
 
         dataSet.notifyDataSetChanged();
         lineChart.notifyDataSetChanged();
@@ -269,6 +270,7 @@ public class LineSetView extends LinearLayout {
         dataSet.setLineWidth(1.5f);
         dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
         dataSet.setColor(Color.GREEN);
+        dataSet.setValueTextColor(Color.BLACK);
 
         dataSet.setCircleRadius(20);
 
