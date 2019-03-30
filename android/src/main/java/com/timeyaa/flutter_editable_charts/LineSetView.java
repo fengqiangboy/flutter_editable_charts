@@ -42,6 +42,9 @@ public class LineSetView extends LinearLayout {
      */
     private float maxY = 50;
 
+    /**
+     * 最小值
+     */
     private float minY = 0;
 
     public LineSetView(Context context) {
@@ -295,8 +298,7 @@ public class LineSetView extends LinearLayout {
             }
 
             if (Math.abs(entry.getX() - nValue.x) < 0.2) {
-
-                entry.setY(yValue);
+                entry.setY(Math.round(yValue));
             }
         }
 
