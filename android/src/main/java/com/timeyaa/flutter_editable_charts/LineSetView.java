@@ -267,7 +267,6 @@ public class LineSetView extends LinearLayout {
 
         LineDataSet dataSet = new LineDataSet(entries, null);
         dataSet.setHighlightEnabled(false);
-//        dataSet.setCubicIntensity(0.2f);
         dataSet.setDrawCircles(true);
         dataSet.setDrawIcons(false);
         dataSet.setDrawCircleHole(false);
