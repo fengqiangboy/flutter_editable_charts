@@ -102,7 +102,7 @@ class _MyAppState extends State<MyApp> {
       xAxisTextColor: Colors.red,
       axisLeftTextColor: Colors.red,
       valueTextColor: Colors.white,
-      valueCircleColor: Colors.white,
+      valueCircleColor: Theme.of(context).accentColor,
       valueColor: Colors.red,
       backgroundColor: Colors.grey,
       fillColor: Colors.blue,

@@ -267,9 +267,10 @@ public class LineSetView extends LinearLayout {
 
         LineDataSet dataSet = new LineDataSet(entries, null);
         dataSet.setHighlightEnabled(false);
-        dataSet.setCubicIntensity(0.2f);
+//        dataSet.setCubicIntensity(0.2f);
         dataSet.setDrawCircles(true);
         dataSet.setDrawIcons(false);
+        dataSet.setDrawCircleHole(false);
         dataSet.setCircleColor(Color.BLACK);
         dataSet.setValueTextSize(9f);
         dataSet.setDrawFilled(true);
@@ -279,7 +280,7 @@ public class LineSetView extends LinearLayout {
         dataSet.setColor(Color.GREEN);
         dataSet.setValueTextColor(Color.BLACK);
 
-        dataSet.setCircleRadius(5);
+        dataSet.setCircleRadius(3);
 
         return dataSet;
     }
