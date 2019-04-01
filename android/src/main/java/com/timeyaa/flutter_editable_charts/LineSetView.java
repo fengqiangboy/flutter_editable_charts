@@ -122,6 +122,8 @@ public class LineSetView extends LinearLayout {
         dataSet.setDrawValues(true);
         dataSet.setValueTextColor(Color.BLACK);
 
+        lineChart.setMaxVisibleValueCount(dataModels.size() + 1);
+
         dataSet.notifyDataSetChanged();
         lineChart.notifyDataSetChanged();
         lineChart.invalidate();
@@ -184,7 +186,6 @@ public class LineSetView extends LinearLayout {
         xAxis.setAvoidFirstLastClipping(true);
         xAxis.setAxisMinimum(0f);
         xAxis.setAxisMaximum(10f);
-        lineChart.setMaxVisibleValueCount(10);
         xAxis.setTextColor(Color.WHITE);
 
         YAxis axisLeft = lineChart.getAxisLeft();
@@ -263,7 +264,7 @@ public class LineSetView extends LinearLayout {
         dataSet.setCubicIntensity(0.2f);
         dataSet.setDrawCircles(true);
         dataSet.setDrawIcons(false);
-        dataSet.setCircleColor(Color.GREEN);
+        dataSet.setCircleColor(Color.BLACK);
         dataSet.setValueTextSize(9f);
         dataSet.setDrawFilled(true);
         dataSet.setDrawValues(true);
