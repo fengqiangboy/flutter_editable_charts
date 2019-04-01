@@ -18,6 +18,21 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+
+    var initValue = 180.0;
+    var initData = [
+      LineDataModel(x: 0, y: initValue),
+      LineDataModel(x: 0.5, y: initValue),
+      LineDataModel(x: 1, y: initValue),
+      LineDataModel(x: 1.5, y: initValue),
+      LineDataModel(x: 2, y: initValue),
+      LineDataModel(x: 2.5, y: initValue),
+      LineDataModel(x: 3, y: initValue),
+      LineDataModel(x: 3.5, y: initValue),
+      LineDataModel(x: 4, y: initValue),
+      LineDataModel(x: 4.5, y: initValue),
+    ];
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -31,6 +46,14 @@ class _MyAppState extends State<MyApp> {
                   color: Colors.white,
                   padding: const EdgeInsets.all(8.0),
                   child: FlutterEditableCharts(
+                    initValueTextColor: Colors.red,
+                    initValueColor: Colors.grey,
+                    initBackgroundColor: Colors.white,
+                    initMaxY: 300,
+                    initMinY: 100,
+                    initData: initData,
+                    initXSpaceMin: 0.5,
+                    initMaxX: 4.5,
                     onCreatedCallback: (controller) => _controller = controller,
                     onStart: () => debugPrint("on start"),
                     onChanging: () => debugPrint("on changing"),
@@ -61,16 +84,16 @@ class _MyAppState extends State<MyApp> {
 
   void _setData() async {
     List<LineDataModel> models = [
-      LineDataModel(x: 0, y: 13),
-      LineDataModel(x: 1, y: 45),
-      LineDataModel(x: 2, y: 26),
-      LineDataModel(x: 3, y: 33),
-      LineDataModel(x: 4, y: 24),
-      LineDataModel(x: 5, y: 9),
-      LineDataModel(x: 6, y: 13),
+      LineDataModel(x: 0, y: 180),
+      LineDataModel(x: 1, y: 180),
+      LineDataModel(x: 2, y: 180),
+      LineDataModel(x: 3, y: 180),
+      LineDataModel(x: 4, y: 180),
+      LineDataModel(x: 5, y: 180),
+      LineDataModel(x: 6, y: 180),
     ];
 
-    await _controller.setLineBoundaryData(0, 6, 6, 1, 0, 30);
+    await _controller.setLineBoundaryData(0, 4.5, 10, 0.5, 100, 250);
     await _controller.setData(models);
   }
 
