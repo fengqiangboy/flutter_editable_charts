@@ -18,7 +18,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-
     var initValue = 180.0;
     var initData = [
       LineDataModel(x: 0, y: initValue),
@@ -99,12 +98,17 @@ class _MyAppState extends State<MyApp> {
 
   void _changeColor() async {
     await _controller.setLineStyle(
-        gridBackgroundColor: Colors.red,
-        xAxisTextColor: Colors.red,
-        axisLeftTextColor: Colors.red,
-        valueTextColor: Colors.white,
-        valueCircleColor: Colors.white,
-        valueColor: Colors.red,
-        backgroundColor: Colors.blue);
+      gridBackgroundColor: Colors.red,
+      xAxisTextColor: Colors.red,
+      axisLeftTextColor: Colors.red,
+      valueTextColor: Colors.white,
+      valueCircleColor: Colors.white,
+      valueColor: Colors.red,
+      backgroundColor: Colors.grey,
+      fillColor: Colors.blue,
+      fillAlpha: 100,
+      drawFilled: true,
+      drawCircles: false,
+    );
   }
 }

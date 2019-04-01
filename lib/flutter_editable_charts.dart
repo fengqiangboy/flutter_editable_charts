@@ -63,6 +63,18 @@ class FlutterEditableCharts extends StatefulWidget {
   /// 初始化的背景颜色
   final Color initBackgroundColor;
 
+  /// 初始化填充颜色
+  final Color fillColor;
+
+  /// 初始化背景填充透明度
+  final int fillAlpha;
+
+  /// 初始化是否画填充颜色
+  final bool drawFilled;
+
+  /// 初始化是否画圆圈
+  final bool drawCircles;
+
   /// 初始化使用的数据
   final List<LineDataModel> initData;
 
@@ -86,6 +98,10 @@ class FlutterEditableCharts extends StatefulWidget {
     this.initValueCircleColor = Colors.white,
     this.initValueColor = Colors.white,
     this.initBackgroundColor = Colors.blueGrey,
+    this.fillColor = Colors.grey,
+    this.fillAlpha = 85,
+    this.drawFilled = true,
+    this.drawCircles = true,
   }) : super(key: key);
 
   @override
@@ -114,13 +130,17 @@ class FlutterEditableChartsState extends State<FlutterEditableCharts> {
 
     /// 初始化颜色
     await controller.setLineStyle(
-        gridBackgroundColor: widget.initGridBackgroundColor,
-        xAxisTextColor: widget.initXAxisTextColor,
-        axisLeftTextColor: widget.initAxisLeftTextColor,
-        valueTextColor: widget.initValueTextColor,
-        valueCircleColor: widget.initValueCircleColor,
-        valueColor: widget.initValueColor,
-        backgroundColor: widget.initBackgroundColor);
+      gridBackgroundColor: widget.initGridBackgroundColor,
+      xAxisTextColor: widget.initXAxisTextColor,
+      axisLeftTextColor: widget.initAxisLeftTextColor,
+      valueTextColor: widget.initValueTextColor,
+      valueCircleColor: widget.initValueCircleColor,
+      valueColor: widget.initValueColor,
+      backgroundColor: widget.initBackgroundColor,
+      fillColor: widget.fillColor,
+      fillAlpha: widget.fillAlpha,
+      drawFilled: widget.drawFilled,
+      drawCircles: widget.drawCircles,);
 
     /// 设置初始化的坐标参数
     await controller.setLineBoundaryData(
@@ -207,7 +227,7 @@ class FlutterEditableChartsController {
   /// [datas] 要设置的数据点
   Future<void> setData(List<LineDataModel> datas) async {
     List jsonModels =
-        datas.map((model) => json.encode(model.toJson())).toList();
+    datas.map((model) => json.encode(model.toJson())).toList();
 
     await _channel.invokeMethod("setData", <String, List>{"data": jsonModels});
   }
@@ -234,22 +254,29 @@ class FlutterEditableChartsController {
     );
   }
 
-  Future<void> setLineStyle(
-      {@required Color gridBackgroundColor,
-      @required Color xAxisTextColor,
-      @required Color axisLeftTextColor,
-      @required Color valueTextColor,
-      @required Color valueCircleColor,
-      @required Color valueColor,
-      @required Color backgroundColor}) async {
-    await _channel.invokeMethod("setLineStyle", <String, int>{
+  Future<void> setLineStyle({@required Color gridBackgroundColor,
+    @required Color xAxisTextColor,
+    @required Color axisLeftTextColor,
+    @required Color valueTextColor,
+    @required Color valueCircleColor,
+    @required Color valueColor,
+    @required Color backgroundColor,
+    @required Color fillColor,
+    @required int fillAlpha,
+    @required bool drawFilled,
+    @required bool drawCircles,}) async {
+    await _channel.invokeMethod("setLineStyle", <String, dynamic>{
       "gridBackgroundColor": gridBackgroundColor.value,
       "xAxisTextColor": xAxisTextColor.value,
       "axisLeftTextColor": axisLeftTextColor.value,
       "valueTextColor": valueTextColor.value,
       "valueCircleColor": valueCircleColor.value,
       "valueColor": valueColor.value,
-      "backgroundColor": backgroundColor.value
+      "backgroundColor": backgroundColor.value,
+      "fillColor": fillColor.value,
+      "fillAlpha": fillAlpha,
+      "drawFilled": drawFilled,
+      "drawCircles": drawCircles,
     });
   }
 }

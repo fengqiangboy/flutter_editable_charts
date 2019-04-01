@@ -73,19 +73,28 @@ public class LineSetView extends LinearLayout {
      * @param valueTextColor      值颜色
      * @param valueCircleColor    值圆圈颜色
      * @param valueColor          线颜色
+     * @param backgroundColor     背景颜色
+     * @param fillColor           填充颜色
+     * @param fillAlpha           填充透明度
+     * @param drawCircles         是否画圆点
+     * @param drawFilled          是否填充
      */
     public void setLineStyle(long gridBackgroundColor, long xAxisTextColor, long axisLeftTextColor,
-                             long valueTextColor, long valueCircleColor, long valueColor, long backgroundColor) {
+                             long valueTextColor, long valueCircleColor, long valueColor, long backgroundColor,
+                             long fillColor, int fillAlpha, boolean drawFilled, boolean drawCircles) {
         findViewById(R.id.chart_wrap).setBackgroundColor((int) backgroundColor);
 
         lineChart.setGridBackgroundColor((int) gridBackgroundColor);
         lineChart.getXAxis().setTextColor((int) xAxisTextColor);
         lineChart.getAxisLeft().setTextColor((int) axisLeftTextColor);
-        lineChart.getData().setValueTextColor((int) valueTextColor);
 
         dataSet.setCircleColor((int) valueCircleColor);
+        dataSet.setDrawCircles(drawCircles);
         dataSet.setColor((int) valueColor);
         dataSet.setValueTextColor((int) valueTextColor);
+        dataSet.setFillColor((int) fillColor);
+        dataSet.setFillAlpha(fillAlpha);
+        dataSet.setDrawFilled(drawFilled);
 
         dataSet.notifyDataSetChanged();
         lineChart.notifyDataSetChanged();
