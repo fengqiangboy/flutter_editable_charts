@@ -119,9 +119,6 @@ public class LineSetView extends LinearLayout {
             dataSet.getValues().add(nEntry);
         }
 
-        dataSet.setDrawValues(true);
-        dataSet.setValueTextColor(Color.BLACK);
-
         lineChart.setMaxVisibleValueCount(dataModels.size() + 1);
 
         dataSet.notifyDataSetChanged();
