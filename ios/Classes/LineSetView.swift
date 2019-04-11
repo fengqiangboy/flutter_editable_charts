@@ -183,5 +183,20 @@ class LineSetView: UIView {
                       fillAlpha: Int,
                       drawFilled: Bool,
                       drawCircles: Bool) {
+        self.backgroundColor = ColorFromRGB(rgbValue: gridBackgroundColor)
+        
+        chartView.gridBackgroundColor = ColorFromRGB(rgbValue: gridBackgroundColor)
+        chartView.xAxis.labelTextColor = ColorFromRGB(rgbValue: xAxisTextColor)
+        chartView.leftAxis.labelTextColor = ColorFromRGB(rgbValue: axisLeftTextColor)
+        
+        dataSet.circleColors = [ColorFromRGB(rgbValue: valueCircleColor)]
+        dataSet.drawCirclesEnabled = drawCircles
+        dataSet.colors = [ColorFromRGB(rgbValue: valueColor)]
+        dataSet.valueTextColor = ColorFromRGB(rgbValue: valueTextColor)
+        dataSet.fillColor = ColorFromRGB(rgbValue: fillColor)
+        dataSet.fillAlpha = CGFloat(Double(fillAlpha) / 255.0)
+        dataSet.drawFilledEnabled = drawFilled
+        
+        reloadChartView()
     }
 }
