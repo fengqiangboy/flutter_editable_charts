@@ -1,14 +1,9 @@
 import Flutter
 import UIKit
 
-public class SwiftFlutterEditableChartsPlugin: NSObject, FlutterPlugin {
+public class SwiftFlutterEditableChartsPlugin: NSObject {
+@objc
   public static func register(with registrar: FlutterPluginRegistrar) {
-    let channel = FlutterMethodChannel(name: "flutter_editable_charts", binaryMessenger: registrar.messenger())
-    let instance = SwiftFlutterEditableChartsPlugin()
-    registrar.addMethodCallDelegate(instance, channel: channel)
-  }
-
-  public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-    result("iOS " + UIDevice.current.systemVersion)
+    registrar.register(FlutterEditableChartsFactory(), withId: "com.timeyaa.com/flutter_editable_charts")
   }
 }

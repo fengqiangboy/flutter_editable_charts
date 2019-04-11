@@ -117,6 +117,10 @@ class FlutterEditableChartsState extends State<FlutterEditableCharts> {
           onPlatformViewCreated: _onPlatformViewCreated);
     }
 
+    if (defaultTargetPlatform == TargetPlatform.iOS) {
+      return UiKitView(viewType: "com.timeyaa.com/flutter_editable_charts",);
+    }
+
     return Text("iOS version is comming");
   }
 

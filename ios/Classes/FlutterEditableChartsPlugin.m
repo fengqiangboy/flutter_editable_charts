@@ -3,6 +3,6 @@
 
 @implementation FlutterEditableChartsPlugin
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
-  [SwiftFlutterEditableChartsPlugin registerWithRegistrar:registrar];
+  [SwiftFlutterEditableChartsPlugin registerWith:registrar];
 }
 @end
