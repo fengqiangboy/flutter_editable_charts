@@ -58,9 +58,9 @@ class FlutterEditableCharts: NSObject, FlutterPlatformView {
     /// - Parameter result: 返回给dart的结果
     func getData(result: FlutterResult) {
         let lineData = lineView.lineData
-        
+        let jsonEncoder = JSONEncoder()
         let jsonLineData = lineData.map { (d) -> String in
-            let resultData = try! JSONEncoder().encode(d)
+            let resultData = try! jsonEncoder.encode(d)
             return String(data: resultData, encoding: .utf8)!
         }
         
