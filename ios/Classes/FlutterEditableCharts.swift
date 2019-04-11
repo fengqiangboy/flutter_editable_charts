@@ -47,15 +47,18 @@ class FlutterEditableCharts: NSObject, FlutterPlatformView {
         switch call.method {
         case "getData":
             getData(result: result)
+        case "setData":
+            setData(call: call, result: result)
+        case "setLineBoundaryData":
+            setLineBoundaryData(call: call, result: result)
+        case "setLineStyle":
+            setLineStyle(call: call, result: result)
         default:
-            result(nil)
-//            result(FlutterMethodNotImplemented)
+            result(FlutterMethodNotImplemented)
         }
     }
     
     /// 获取数据
-    ///
-    /// - Parameter result: 返回给dart的结果
     func getData(result: FlutterResult) {
         let lineData = lineView.lineData
         let jsonEncoder = JSONEncoder()
@@ -65,6 +68,27 @@ class FlutterEditableCharts: NSObject, FlutterPlatformView {
         }
         
         result(jsonLineData)
+    }
+    
+    /// 设置数据
+    func setData(call: FlutterMethodCall, result: FlutterResult) {
+        guard let datasArgs = (call.arguments as? [String: [String]])?["data"] else { return }
+        let jsonDecoder = JSONDecoder()
+        lineView.lineData = datasArgs.map { (dataJsonStr) in
+            try! jsonDecoder.decode(LineDataModel.self, from: dataJsonStr.data(using: .utf8)!)
+        }
+        
+        result(nil)
+    }
+    
+    /// 设置边界值
+    func setLineBoundaryData(call: FlutterMethodCall, result: FlutterResult) {
+        result(nil)
+    }
+    
+    /// 设置线条样式
+    func setLineStyle(call: FlutterMethodCall, result: FlutterResult) {
+        result(nil)
     }
     
 }
