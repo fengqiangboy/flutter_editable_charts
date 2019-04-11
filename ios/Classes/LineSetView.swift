@@ -82,13 +82,30 @@ class LineSetView: UIView {
         return dataSet
     }()
     
+    var lineData: [LineDataModel] {
+        set {
+            dataSet.values.removeAll()
+            for value in newValue {
+                dataSet.values.append(ChartDataEntry(x: value.x, y: value.y))
+            }
+            
+            chartView.xAxis.labelCount = newValue.count
+            
+            chartView.notifyDataSetChanged()
+        }
+        
+        get {
+            return dataSet.values.map { LineDataModel(x: $0.x, y: $0.y) }
+        }
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubview(chartView)
+        self.addSubview(chartView)
     }
     
     override func layoutSubviews() {
@@ -97,12 +114,17 @@ class LineSetView: UIView {
     }
     
     /// 图表滑动
+    ///
+    /// - Parameter pan: 手势处理
     @objc func chartViewPan(_ pan: UIPanGestureRecognizer) {
         let view = pan.view as! LineChartView
         let value = view.valueForTouchPoint(point: pan.location(in: view), axis: .left)
         valueChange(to: value)
     }
     
+    /// 值改变的时候的调用
+    ///
+    /// - Parameter value: 改变的新值
     private func valueChange(to value: CGPoint) {
         // 获取数据源
         guard let data = chartView.data?.getDataSetByIndex(0) else {
