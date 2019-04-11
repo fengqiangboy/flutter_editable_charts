@@ -171,4 +171,17 @@ class LineSetView: UIView {
         
         reloadChartView()
     }
+    
+    func setLineStyle(gridBackgroundColor: Int,
+                      xAxisTextColor: Int,
+                      axisLeftTextColor: Int,
+                      valueTextColor: Int,
+                      valueCircleColor: Int,
+                      valueColor: Int,
+                      backgroundColor: Int,
+                      fillColor: Int,
+                      fillAlpha: Int,
+                      drawFilled: Bool,
+                      drawCircles: Bool) {
+    }
 }

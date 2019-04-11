@@ -95,7 +95,9 @@ class FlutterEditableCharts: NSObject, FlutterPlatformView {
             let maxY = args["maxY"] as? Double,
             let xLabelCount = args["xLabelCount"] as? Int,
             let xSpaceMin = args["xSpaceMin"] as? Double else {
-            result(FlutterError(code: "1", message: "Arguments error", details: "Arguments need type error, not can be null"))
+            result(FlutterError(code: "1",
+                                message: "Arguments error",
+                                details: "Arguments need type error, not can be null"))
             return
         }
         
@@ -111,6 +113,36 @@ class FlutterEditableCharts: NSObject, FlutterPlatformView {
     
     /// 设置线条样式
     func setLineStyle(call: FlutterMethodCall, result: FlutterResult) {
+        guard
+            let args = call.arguments as? [String: Any],
+            let gridBackgroundColor = args["gridBackgroundColor"] as? Int,
+            let xAxisTextColor = args["xAxisTextColor"] as? Int,
+            let axisLeftTextColor = args["axisLeftTextColor"] as? Int,
+            let valueTextColor = args["valueTextColor"] as? Int,
+            let valueCircleColor = args["valueCircleColor"] as? Int,
+            let valueColor = args["valueColor"] as? Int,
+            let backgroundColor = args["backgroundColor"] as? Int,
+            let fillColor = args["fillColor"] as? Int,
+            let fillAlpha = args["fillAlpha"] as? Int,
+            let drawFilled = args["drawFilled"] as? Bool,
+            let drawCircles = args["drawCircles"] as? Bool else {
+                result(FlutterError(code: "1",
+                                    message: "Arguments error",
+                                    details: "Arguments need type error, not can be null"))
+                return
+        }
+        
+        lineSetView.setLineStyle(gridBackgroundColor: gridBackgroundColor,
+                                 xAxisTextColor: xAxisTextColor,
+                                 axisLeftTextColor: axisLeftTextColor,
+                                 valueTextColor: valueTextColor,
+                                 valueCircleColor: valueCircleColor,
+                                 valueColor: valueColor,
+                                 backgroundColor: backgroundColor,
+                                 fillColor: fillColor,
+                                 fillAlpha: fillAlpha,
+                                 drawFilled: drawFilled,
+                                 drawCircles: drawCircles)
         result(nil)
     }
     
