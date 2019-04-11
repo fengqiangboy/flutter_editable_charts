@@ -12,6 +12,10 @@ class LineSetView: UIView {
     
     var panGesture: UIPanGestureRecognizer?
     
+    var maxY = 200.0
+    
+    var minY = 100.0
+    
     lazy var chartView: LineChartView = {
         let chartView = LineChartView()
         chartView.gridBackgroundColor = NSUIColor.white
@@ -88,9 +92,7 @@ class LineSetView: UIView {
             dataSet.values.removeAll(keepingCapacity: true)
             dataSet.values.append(contentsOf: nDataSet)
             
-            chartView.xAxis.labelCount = newValue.count
-            
-            chartView.notifyDataSetChanged()
+            reloadChartView()
         }
         
         get {
@@ -110,6 +112,11 @@ class LineSetView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         chartView.frame = self.bounds
+    }
+    
+    func reloadChartView() {
+        dataSet.notifyDataSetChanged()
+        chartView.notifyDataSetChanged()
     }
     
     /// 图表滑动
@@ -136,16 +143,22 @@ class LineSetView: UIView {
                 continue
             }
             
-            if abs(entry.x - Double(value.x)) < 0.1 {
-                entry.y = Double(value.y)
+            if abs(entry.x - Double(value.x)) < 0.2 {
+                let y = Double(value.y)
+                var yResult = max(y, minY)
+                yResult = min(y, maxY)
+                entry.y = Double(yResult)
                 break
             }
         }
         
-        dataSet.notifyDataSetChanged()
+        reloadChartView()
     }
     
     func setLineBoundaryData(minX: Double, maxX: Double, xLabelCount: Int, xSpaceMin: Double, minY: Double, maxY: Double) {
+        self.maxY = maxY
+        self.minY = minY
+        
         let xAxis = chartView.xAxis
         xAxis.axisMinimum = minX
         xAxis.axisMaximum = maxX
@@ -156,6 +169,6 @@ class LineSetView: UIView {
         axisLeft.axisMinimum = minY
         axisLeft.axisMaximum = maxY
         
-        dataSet.notifyDataSetChanged()
+        reloadChartView()
     }
 }
