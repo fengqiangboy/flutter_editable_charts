@@ -15,6 +15,7 @@ class FlutterEditableCharts: NSObject, FlutterPlatformView {
     
     let methodChannel: FlutterMethodChannel
     
+    let lineView: LineSetView
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -25,6 +26,7 @@ class FlutterEditableCharts: NSObject, FlutterPlatformView {
         self.viewIdentifier = viewId
         self.methodChannel = FlutterMethodChannel(name: "com.timeyaa.com/flutter_editable_charts_\(viewId)",
             binaryMessenger: binaryMessenger)
+        self.lineView = LineSetView(frame: frame)
         super.init()
         
         self.methodChannel.setMethodCallHandler { [weak self] (methodCall, result) in
@@ -33,13 +35,36 @@ class FlutterEditableCharts: NSObject, FlutterPlatformView {
     }
     
     func view() -> UIView {
-        let view = LineSetView(frame: frame)
-        return view
+        return lineView
     }
     
+    /// dart 调用本地方法
+    ///
+    /// - Parameters:
+    ///   - call: 调用方法的信息
+    ///   - result: 调用之后的方法结果
     func onMethodCall(call: FlutterMethodCall, result: FlutterResult) {
-        print(call.method)
-        result(nil)
+        switch call.method {
+        case "getData":
+            getData(result: result)
+        default:
+            result(nil)
+//            result(FlutterMethodNotImplemented)
+        }
+    }
+    
+    /// 获取数据
+    ///
+    /// - Parameter result: 返回给dart的结果
+    func getData(result: FlutterResult) {
+        let lineData = lineView.lineData
+        guard let resultData = try? JSONEncoder().encode(lineData) else {
+            result(nil)
+            return
+        }
+        
+        let resultJson = String(data: resultData, encoding: .utf8)
+        result(resultJson)
     }
     
 }

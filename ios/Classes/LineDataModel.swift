@@ -7,7 +7,7 @@
 
 import Foundation
 
-class LineDataModel {
+class LineDataModel: Codable {
     
     var x: Double
     

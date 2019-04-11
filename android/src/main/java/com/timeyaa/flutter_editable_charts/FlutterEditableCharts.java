@@ -138,7 +138,6 @@ public class FlutterEditableCharts implements PlatformView, MethodChannel.Method
 
     @Override
     public void dispose() {
-
     }
 
     @Override
