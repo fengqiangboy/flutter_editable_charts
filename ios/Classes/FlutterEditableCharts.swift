@@ -15,7 +15,7 @@ class FlutterEditableCharts: NSObject, FlutterPlatformView {
     
     let methodChannel: FlutterMethodChannel
     
-    let lineView: LineSetView
+    let lineSetView: LineSetView
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -26,7 +26,7 @@ class FlutterEditableCharts: NSObject, FlutterPlatformView {
         self.viewIdentifier = viewId
         self.methodChannel = FlutterMethodChannel(name: "com.timeyaa.com/flutter_editable_charts_\(viewId)",
             binaryMessenger: binaryMessenger)
-        self.lineView = LineSetView(frame: frame)
+        self.lineSetView = LineSetView(frame: frame)
         super.init()
         
         self.methodChannel.setMethodCallHandler { [weak self] (methodCall, result) in
@@ -35,7 +35,7 @@ class FlutterEditableCharts: NSObject, FlutterPlatformView {
     }
     
     func view() -> UIView {
-        return lineView
+        return lineSetView
     }
     
     /// dart 调用本地方法
@@ -60,7 +60,7 @@ class FlutterEditableCharts: NSObject, FlutterPlatformView {
     
     /// 获取数据
     func getData(result: FlutterResult) {
-        let lineData = lineView.lineData
+        let lineData = lineSetView.lineData
         let jsonEncoder = JSONEncoder()
         let jsonLineData = lineData.map { (d) -> String in
             let resultData = try! jsonEncoder.encode(d)
@@ -74,7 +74,7 @@ class FlutterEditableCharts: NSObject, FlutterPlatformView {
     func setData(call: FlutterMethodCall, result: FlutterResult) {
         guard let datasArgs = (call.arguments as? [String: [String]])?["data"] else { return }
         let jsonDecoder = JSONDecoder()
-        lineView.lineData = datasArgs.map { (dataJsonStr) in
+        lineSetView.lineData = datasArgs.map { (dataJsonStr) in
             try! jsonDecoder.decode(LineDataModel.self, from: dataJsonStr.data(using: .utf8)!)
         }
         
