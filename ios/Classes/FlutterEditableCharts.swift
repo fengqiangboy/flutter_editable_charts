@@ -38,8 +38,9 @@ class FlutterEditableCharts: NSObject, FlutterPlatformView {
         return view
     }
     
-    func onMethodCall(call: FlutterMethodCall, result:FlutterResult) {
+    func onMethodCall(call: FlutterMethodCall, result: FlutterResult) {
         print(call.method)
+        result(nil)
     }
     
 }
