@@ -29,8 +29,8 @@ class FlutterEditableCharts: NSObject, FlutterPlatformView {
         self.lineSetView = LineSetView(frame: frame)
         super.init()
         
-        self.methodChannel.setMethodCallHandler { [weak self] (methodCall, result) in
-            self?.onMethodCall(call: methodCall, result: result)
+        self.methodChannel.setMethodCallHandler { [weak self] in
+            self?.onMethodCall(call: $0, result: $1)
         }
     }
     
@@ -72,7 +72,11 @@ class FlutterEditableCharts: NSObject, FlutterPlatformView {
     
     /// 设置数据
     func setData(call: FlutterMethodCall, result: FlutterResult) {
-        guard let datasArgs = (call.arguments as? [String: [String]])?["data"] else { return }
+        guard let datasArgs = (call.arguments as? [String: [String]])?["data"] else {
+            result(FlutterError(code: "1", message: "Arguments error", details: "Arguments need to be [String: [String]] type"))
+            return
+        }
+        
         let jsonDecoder = JSONDecoder()
         lineSetView.lineData = datasArgs.map { (dataJsonStr) in
             try! jsonDecoder.decode(LineDataModel.self, from: dataJsonStr.data(using: .utf8)!)
@@ -83,6 +87,25 @@ class FlutterEditableCharts: NSObject, FlutterPlatformView {
     
     /// 设置边界值
     func setLineBoundaryData(call: FlutterMethodCall, result: FlutterResult) {
+        guard
+            let args = call.arguments as? [String: Any],
+            let minX = args["minX"] as? Double,
+            let maxX = args["maxX"] as? Double,
+            let minY = args["minY"] as? Double,
+            let maxY = args["maxY"] as? Double,
+            let xLabelCount = args["xLabelCount"] as? Int,
+            let xSpaceMin = args["xSpaceMin"] as? Double else {
+            result(FlutterError(code: "1", message: "Arguments error", details: "Arguments need type error, not can be null"))
+            return
+        }
+        
+        lineSetView.setLineBoundaryData(minX: minX,
+                                        maxX: maxX,
+                                        xLabelCount: xLabelCount,
+                                        xSpaceMin: xSpaceMin,
+                                        minY: minY,
+                                        maxY: maxY)
+        
         result(nil)
     }
     

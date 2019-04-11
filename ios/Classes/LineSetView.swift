@@ -143,7 +143,19 @@ class LineSetView: UIView {
         }
         
         dataSet.notifyDataSetChanged()
-        chartView.notifyDataSetChanged()
     }
     
+    func setLineBoundaryData(minX: Double, maxX: Double, xLabelCount: Int, xSpaceMin: Double, minY: Double, maxY: Double) {
+        let xAxis = chartView.xAxis
+        xAxis.axisMinimum = minX
+        xAxis.axisMaximum = maxX
+        xAxis.spaceMin = xSpaceMin
+        xAxis.labelCount = xLabelCount
+        
+        let axisLeft = chartView.leftAxis
+        axisLeft.axisMinimum = minY
+        axisLeft.axisMaximum = maxY
+        
+        dataSet.notifyDataSetChanged()
+    }
 }
