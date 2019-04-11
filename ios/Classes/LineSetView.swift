@@ -84,10 +84,9 @@ class LineSetView: UIView {
     
     var lineData: [LineDataModel] {
         set {
-            dataSet.values.removeAll()
-            for value in newValue {
-                dataSet.values.append(ChartDataEntry(x: value.x, y: value.y))
-            }
+            let nDataSet = newValue.map { ChartDataEntry(x: $0.x, y: $0.y) }
+            dataSet.values.removeAll(keepingCapacity: true)
+            dataSet.values.append(contentsOf: nDataSet)
             
             chartView.xAxis.labelCount = newValue.count
             
