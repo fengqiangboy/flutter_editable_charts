@@ -11,7 +11,29 @@ import Charts
 class LineSetView: UIView {
     
     var chartView: LineChartView = {
-        return LineChartView()
+        let chartView = LineChartView()
+        chartView.gridBackgroundColor = NSUIColor.white
+        chartView.chartDescription?.text = ""
+        
+        chartView.xAxis.labelPosition = .bottom
+        chartView.xAxis.avoidFirstLastClippingEnabled = true
+        chartView.xAxis.axisMinimum = 0
+        chartView.xAxis.axisMaximum = 4.5
+        chartView.xAxis.labelCount = 10
+        chartView.xAxis.labelTextColor = .white
+        chartView.xAxis.labelFont = UIFont.systemFont(ofSize: 11)
+        
+        chartView.leftAxis.axisMinimum = 0
+        chartView.leftAxis.axisMaximum = 200
+        chartView.leftAxis.labelTextColor = .white
+        chartView.leftAxis.labelFont = UIFont.systemFont(ofSize: 11)
+        
+        chartView.rightAxis.enabled = false
+        chartView.legend.enabled = false
+        chartView.pinchZoomEnabled = false
+        chartView.doubleTapToZoomEnabled = false
+        
+        return chartView
     } ()
     
     required init?(coder aDecoder: NSCoder) {
@@ -20,7 +42,6 @@ class LineSetView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        chartView.backgroundColor = UIColor.yellow
         addSubview(chartView)
     }
     
