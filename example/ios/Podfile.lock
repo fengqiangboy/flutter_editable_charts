@@ -1,11 +1,19 @@
 PODS:
+  - Charts (3.2.1):
+    - Charts/Core (= 3.2.1)
+  - Charts/Core (3.2.1)
   - Flutter (1.0.0)
   - flutter_editable_charts (0.0.1):
+    - Charts
     - Flutter
 
 DEPENDENCIES:
   - Flutter (from `.symlinks/flutter/ios`)
   - flutter_editable_charts (from `.symlinks/plugins/flutter_editable_charts/ios`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Charts
 
 EXTERNAL SOURCES:
   Flutter:
@@ -14,8 +22,9 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_editable_charts/ios"
 
 SPEC CHECKSUMS:
+  Charts: f122fb70b19847fa5817d018b77d6c5a2296ab25
   Flutter: 58dd7d1b27887414a370fcccb9e645c08ffd7a6a
-  flutter_editable_charts: fb8c6e97f6e0ce11ed34a443fcfbb4cc92cfbf8b
+  flutter_editable_charts: d360b4bf89360204d929bc07e46fb814b8c44359
 
 PODFILE CHECKSUM: ebd43b443038e611b86ede96e613bd6033c49497
 

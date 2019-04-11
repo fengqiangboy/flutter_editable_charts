@@ -8,9 +8,15 @@
 import Foundation
 
 class FlutterEditableChartsFactory: NSObject, FlutterPlatformViewFactory {
+    
+    let binaryMessenger: FlutterBinaryMessenger
+    
+    init(withBinaryMessenger binaryMessenger: FlutterBinaryMessenger) {
+        self.binaryMessenger = binaryMessenger
+    }
 
     func create(withFrame frame: CGRect, viewIdentifier viewId: Int64, arguments args: Any?) -> FlutterPlatformView {
-        return FlutterEditableCharts(withFrame: frame, viewIdentifier: viewId, arguments: args)
+        return FlutterEditableCharts(withFrame: frame, viewIdentifier: viewId, binaryMessenger: binaryMessenger, arguments: args)
     }
     
 }
