@@ -33,8 +33,7 @@ class FlutterEditableCharts: NSObject, FlutterPlatformView {
     }
     
     func view() -> UIView {
-        let view = UIView(frame: frame)
-        view.backgroundColor = UIColor.red
+        let view = LineSetView(frame: frame)
         return view
     }
     
