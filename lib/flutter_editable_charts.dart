@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
@@ -118,8 +119,15 @@ class FlutterEditableChartsState extends State<FlutterEditableCharts> {
     }
 
     if (defaultTargetPlatform == TargetPlatform.iOS) {
-      return UiKitView(viewType: "com.timeyaa.com/flutter_editable_charts",
-        onPlatformViewCreated: _onPlatformViewCreated,);
+      return UiKitView(
+        viewType: "com.timeyaa.com/flutter_editable_charts",
+        onPlatformViewCreated: _onPlatformViewCreated,
+//        gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
+//          new Factory<OneSequenceGestureRecognizer>(
+//            () => new PanGestureRecognizer(),
+//          )
+//        ].toSet(),
+      );
     }
 
     return Text("iOS version is comming");
@@ -145,7 +153,8 @@ class FlutterEditableChartsState extends State<FlutterEditableCharts> {
       fillColor: widget.fillColor,
       fillAlpha: widget.fillAlpha,
       drawFilled: widget.drawFilled,
-      drawCircles: widget.drawCircles,);
+      drawCircles: widget.drawCircles,
+    );
 
     /// 设置初始化的坐标参数
     await controller.setLineBoundaryData(
@@ -232,7 +241,7 @@ class FlutterEditableChartsController {
   /// [datas] 要设置的数据点
   Future<void> setData(List<LineDataModel> datas) async {
     List jsonModels =
-    datas.map((model) => json.encode(model.toJson())).toList();
+        datas.map((model) => json.encode(model.toJson())).toList();
 
     await _channel.invokeMethod("setData", <String, List>{"data": jsonModels});
   }
@@ -259,7 +268,8 @@ class FlutterEditableChartsController {
     );
   }
 
-  Future<void> setLineStyle({@required Color gridBackgroundColor,
+  Future<void> setLineStyle({
+    @required Color gridBackgroundColor,
     @required Color xAxisTextColor,
     @required Color axisLeftTextColor,
     @required Color valueTextColor,
@@ -269,7 +279,8 @@ class FlutterEditableChartsController {
     @required Color fillColor,
     @required int fillAlpha,
     @required bool drawFilled,
-    @required bool drawCircles,}) async {
+    @required bool drawCircles,
+  }) async {
     await _channel.invokeMethod("setLineStyle", <String, dynamic>{
       "gridBackgroundColor": gridBackgroundColor.value,
       "xAxisTextColor": xAxisTextColor.value,
