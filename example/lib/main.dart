@@ -92,23 +92,23 @@ class _MyAppState extends State<MyApp> {
       LineDataModel(x: 6, y: 180),
     ];
 
-    await _controller.setLineBoundaryData(0, 4.5, 10, 0.5, 100, 250);
+    await _controller.setLineBoundaryData(0, 5.0, 10, 1, 100, 250);
     await _controller.setData(models);
   }
 
   void _changeColor() async {
     await _controller.setLineStyle(
       gridBackgroundColor: Colors.red,
-      xAxisTextColor: Colors.red,
-      axisLeftTextColor: Colors.red,
+      xAxisTextColor: Colors.blue,
+      axisLeftTextColor: Colors.black,
       valueTextColor: Colors.white,
       valueCircleColor: Theme.of(context).accentColor,
-      valueColor: Colors.red,
+      valueColor: Theme.of(context).accentColor,
       backgroundColor: Colors.grey,
       fillColor: Colors.blue,
       fillAlpha: 100,
-      drawFilled: true,
-      drawCircles: false,
+      drawFilled: false,
+      drawCircles: true,
     );
   }
 }

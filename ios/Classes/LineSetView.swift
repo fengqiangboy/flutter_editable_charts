@@ -16,6 +16,8 @@ class LineSetView: UIView {
     
     var minY = 100.0
     
+    var xSpaceMin = 0.5
+    
     lazy var chartView: LineChartView = {
         let chartView = LineChartView()
         chartView.gridBackgroundColor = NSUIColor.white
@@ -143,21 +145,21 @@ class LineSetView: UIView {
                 continue
             }
             
-            if abs(entry.x - Double(value.x)) < 0.2 {
+            if abs(entry.x - Double(value.x)) < xSpaceMin / 2.1 {
                 let y = Double(value.y)
                 var yResult = max(y, minY)
                 yResult = min(y, maxY)
-                entry.y = Double(yResult)
+                entry.y = Double(lrintl(yResult))
+                reloadChartView()
                 break
             }
         }
-        
-        reloadChartView()
     }
     
     func setLineBoundaryData(minX: Double, maxX: Double, xLabelCount: Int, xSpaceMin: Double, minY: Double, maxY: Double) {
         self.maxY = maxY
         self.minY = minY
+        self.xSpaceMin = xSpaceMin
         
         let xAxis = chartView.xAxis
         xAxis.axisMinimum = minX
